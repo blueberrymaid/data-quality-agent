@@ -93,6 +93,22 @@ def caption(doc, text):
          space_before=4, space_after=2, line=1.0, color=GRAY)
 
 
+def figure(doc, path, cap_text, width_cm=15.5):
+    """插入居中图片 + 图注；文件缺失时退化为占位文字，保证脚本不中断。"""
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    pf = p.paragraph_format
+    pf.space_before = Pt(4)
+    pf.space_after = Pt(1)
+    pf.line_spacing = 1.0
+    if Path(path).exists():
+        p.add_run().add_picture(str(path), width=Cm(width_cm))
+        caption(doc, cap_text)
+    else:
+        set_run(p.add_run("〔缺少截图文件：" + Path(path).name + "〕"), size=9, color=GRAY)
+    return p
+
+
 def shade(cell, hex_color="DCE4F2"):
     tc_pr = cell._tc.get_or_add_tcPr()
     el = OxmlElement("w:shd")
@@ -487,8 +503,16 @@ def build() -> Path:
               "温度与 max_tokens 等参数、输入/输出 token 与成本、每次工具调用及其返回规模、"
               "以及开发与运行过程中出现的错误与修正过程（如近似去重键的逐元素类型统一、动作注册适配层缺失等）。"
               "留档运行共 70 条事件，原始日志 runs/" + MET["run_id"] + "/事件记录.jsonl。", size=9.5, indent=0.74)
-    para(doc, "运行记录截图：" + "〔此处插入终端运行截图：检测阶段输出、验证通过信息、评估指标表〕",
-         size=9.5, bold=True, space_before=2)
+    para(doc, "终端运行记录截图（由 scripts/10_print_run_transcript.py 回放留档日志生成，"
+              "输出与上文各表数字同源）：", size=9.5, bold=True, space_before=2)
+    shots = [
+        ("图1_检测阶段.png", "图 B-1　阶段 1/3 质量检测：检测智能体的 8 步 ReAct 轨迹与 35 条缺陷结论", 15.8),
+        ("图2_计划与执行.png", "图 B-2　阶段 2/3 修复计划与逐步执行：8 步有序计划与每步行数变化（47697→45211→45189）", 14.6),
+        ("图3_验证通过.png", "图 B-3　阶段 3/3 验证：第 1 轮即通过，质量分 96.1，硬口径违规 0 项", 15.0),
+        ("图4_评估指标.png", "图 B-4　三层评估：检测层 / 修复层 / 下游分类任务指标", 14.6),
+    ]
+    for fn, cap, w in shots:
+        figure(doc, DOCS_DIR / "截图" / fn, cap, w)
 
     h1(doc, "附录 C　个人贡献说明")
     para(doc, "详细分工见随附《个人贡献说明》，两份材料口径一致：兰祎本负责工具层与检测修复算法、"
