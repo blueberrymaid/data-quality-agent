@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / ".pylibs"))
 from docx import Document  # noqa: E402
 from docx.enum.table import WD_TABLE_ALIGNMENT  # noqa: E402
 from docx.enum.text import WD_ALIGN_PARAGRAPH  # noqa: E402
+from docx.opc.constants import RELATIONSHIP_TYPE as RT  # noqa: E402
 from docx.oxml import OxmlElement  # noqa: E402
 from docx.oxml.ns import qn  # noqa: E402
 from docx.shared import Cm, Pt, RGBColor  # noqa: E402
@@ -91,6 +92,20 @@ def bullet(doc, text, size=10.5):
 def caption(doc, text):
     para(doc, text, size=9, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER,
          space_before=4, space_after=2, line=1.0, color=GRAY)
+
+
+def hyperlink(paragraph, url, text=None, size=9.5, bold=True, color=NAVY):
+    """在已有段落末尾追加一个可点击的外部超链接。"""
+    text = text or url
+    r_id = paragraph.part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hl = OxmlElement("w:hyperlink")
+    hl.set(qn("r:id"), r_id)
+    run = paragraph.add_run(text)
+    set_run(run, size=size, bold=bold, color=color)
+    run.font.underline = True
+    hl.append(run._element)
+    paragraph._p.append(hl)
+    return paragraph
 
 
 def figure(doc, path, cap_text, width_cm=15.5):
@@ -203,7 +218,10 @@ def build() -> Path:
     member_text = "　".join(f"{n}（{c}）" for n, c in MEMBERS)
     prefix = f"{GROUP_NO}　" if GROUP_NO else ""
     para(doc, prefix + member_text + f"　·　{DATE_LINE}", size=9.5,
-         color=GRAY, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=6, line=1.0)
+         color=GRAY, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=3, line=1.0)
+    cover_link = para(doc, "代码仓库：", size=9, color=GRAY,
+                      align=WD_ALIGN_PARAGRAPH.CENTER, space_after=6, line=1.0)
+    hyperlink(cover_link, REPO_PLACEHOLDER, size=9, bold=False, color=NAVY)
 
     # ---- 摘要
     h2(doc, "摘要")
@@ -483,7 +501,8 @@ def build() -> Path:
 
     # ---- 附录
     h1(doc, "附录 A　代码、数据与复现方式")
-    para(doc, "代码仓库：" + REPO_PLACEHOLDER, size=10, bold=True, space_after=2)
+    repo_line = para(doc, "代码仓库：", size=10, bold=True, space_after=2)
+    hyperlink(repo_line, REPO_PLACEHOLDER, size=10, bold=True, color=NAVY)
     para(doc, "目录结构：src/（配置、工具层、智能体层、下游建模）、scripts/（01 取数 → 08 打包）、"
               "data/（raw 原始、injected 注入缺陷、processed 处理后、ground_truth 缺陷真值与干净基准）、"
               "docs/（报告、PPT、指标汇总、消融结果）、runs/（每次运行的事件日志与摘要）。", size=9.5, indent=0.74)
