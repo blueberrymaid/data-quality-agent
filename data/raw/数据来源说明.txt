@@ -1,0 +1,5 @@
+数据来源：UCI Bank Marketing (bank-full.csv)
+获取时间：2026-10-31 23:11:06
+主表行数：45211，列数：22
+客户身份字段（客户编号/姓名/证件后四位/城市/开户年份）由确定性哈希合成，不含真实个人信息；种子 SEED=20251231。
+原始 UCI 地址：https://archive.ics.uci.edu/static/public/222/bank+marketing.zip

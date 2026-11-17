@@ -1,0 +1,18 @@
+# 环境与凭据（绝不提交）
+.env
+.env.local
+.dsh_llm_key
+*.key
+*.pem
+.pylibs/
+.pipcache/
+.venv/
+__pycache__/
+*.pyc
+
+# 可由脚本重新生成的中间产物
+data/processed/中间快照_*.csv
+
+# 历史运行目录：只提交留档运行 run_20261031_234343
+runs/*
+!runs/run_20261031_234343/

@@ -1,0 +1,633 @@
+{
+  "detection": {
+    "per_type": {
+      "missing": {
+        "n_truth": 3938,
+        "n_pred_cells": 3938,
+        "tp": 3938,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "extra_pred": 0,
+        "missed": 0,
+        "excluded_near_dup_cells": 211
+      },
+      "outlier": {
+        "n_truth": 904,
+        "n_pred_cells": 6162,
+        "tp": 860,
+        "precision": 0.1396,
+        "recall": 0.9513,
+        "f1": 0.2434,
+        "extra_pred": 5302,
+        "missed": 44,
+        "excluded_near_dup_cells": 330,
+        "hard_domain_pred": 861,
+        "hard_domain_tp": 860,
+        "hard_domain_precision": 0.9988,
+        "hard_domain_recall": 0.9513
+      },
+      "format": {
+        "n_truth": 2081,
+        "n_pred_cells": 2081,
+        "tp": 2081,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "extra_pred": 0,
+        "missed": 0,
+        "excluded_near_dup_cells": 3495
+      },
+      "conflict": {
+        "n_truth": 923,
+        "n_pred_cells": 5299,
+        "tp": 923,
+        "precision": 0.1742,
+        "recall": 1.0,
+        "f1": 0.2967,
+        "extra_pred": 4376,
+        "missed": 0,
+        "excluded_near_dup_cells": 946
+      },
+      "conflict_by_kind": {
+        "cross_table": {
+          "column": "education",
+          "n_pred": 3617,
+          "n_truth": 0,
+          "tp": 0,
+          "precision": 0.0,
+          "recall": null
+        },
+        "duplicate_key": {
+          "column": "客户编号",
+          "n_pred": 722,
+          "n_truth": 22,
+          "tp": 22,
+          "precision": 0.0305,
+          "recall": 1.0
+        },
+        "self_inconsistent": {
+          "column": "开户年份",
+          "n_pred": 960,
+          "n_truth": 901,
+          "tp": 901,
+          "precision": 0.9385,
+          "recall": 1.0
+        }
+      },
+      "duplicate": {
+        "n_truth_groups": 2454,
+        "n_truth_extra_rows": null,
+        "note": "重复检测按行组评估，修复层面单独统计删除条数"
+      },
+      "label_error": {
+        "n_truth": 678,
+        "n_pred": 1168,
+        "tp": 516,
+        "precision": 0.4418,
+        "recall": 0.7611
+      }
+    },
+    "entity_truth_note": "真值匹配 45211 对，预测见修复评估",
+    "entity_match": {
+      "n_main_rows": 47697,
+      "n_ref_rows": 46567,
+      "n_matchable_main": 45414,
+      "n_pred": 45414,
+      "tp": 45414,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "coverage_of_main": 0.9521,
+      "note": "真值按 ID 归一化后相等判定；档案表里数字被打错一位的行不可召回"
+    }
+  },
+  "repair": {
+    "format": {
+      "n_truth_cells": 2081,
+      "n_checked": 2081,
+      "exact_match": 1778,
+      "approx_match": 39,
+      "exact_rate": 0.8544,
+      "exact_or_approx_rate": 0.8731,
+      "unrecoverable_overwritten": 264
+    },
+    "missing": {
+      "n_truth_cells": 3938,
+      "n_checked": 3938,
+      "exact_match": 1629,
+      "approx_match": 39,
+      "exact_rate": 0.4137,
+      "exact_or_approx_rate": 0.4236,
+      "unrecoverable_overwritten": 2270
+    },
+    "outlier": {
+      "n_truth_cells": 904,
+      "n_checked": 904,
+      "exact_match": 90,
+      "approx_match": 57,
+      "exact_rate": 0.0996,
+      "exact_or_approx_rate": 0.1626,
+      "unrecoverable_overwritten": 757,
+      "within_bounds_after": {
+        "n_checked": 904,
+        "n_in_bounds": 904,
+        "rate": 1.0,
+        "note": "「越界已修正」口径：只看修复后是否回到业务边界内，原始值本身不可还原"
+      }
+    },
+    "conflict": {
+      "n_truth_cells": 923,
+      "n_checked": 901,
+      "exact_match": 53,
+      "approx_match": 848,
+      "exact_rate": 0.0588,
+      "exact_or_approx_rate": 1.0,
+      "unrecoverable_overwritten": 0
+    },
+    "duplicate": {
+      "n_truth_duplicate_groups": 2474,
+      "n_truth_extra_rows": 2486,
+      "rows_before": 47697,
+      "rows_after": 45189,
+      "rows_removed": 2508,
+      "n_keys_deduplicated": 2474,
+      "removed_that_were_true_dups": 2474,
+      "precision": 1.0,
+      "recall": 1.0
+    },
+    "label_error": {
+      "n_truth": 678,
+      "n_changed": 289,
+      "tp": 150,
+      "precision": 0.519,
+      "recall": 0.2212,
+      "note": "precision = 改动的标签里有多少真的是注入的错标；recall = 注入的错标被改回多少"
+    }
+  },
+  "downstream": {
+    "before": {
+      "label": "脏数据（未经智能体处理）",
+      "n_rows": 47697,
+      "n_features": 90,
+      "pos_rate": 0.1317,
+      "models": {
+        "逻辑回归(带类别权重)": {
+          "accuracy": 0.8362,
+          "precision": 0.3837,
+          "recall": 0.4018,
+          "f1": 0.3925,
+          "roc_auc": 0.713,
+          "confusion_matrix": [
+            [
+              7472,
+              811
+            ],
+            [
+              752,
+              505
+            ]
+          ],
+          "n_test": 9540,
+          "pos_rate_test": 0.1318,
+          "cv_f1_mean": 0.3723,
+          "cv_f1_std": 0.0071,
+          "threshold": 0.6
+        },
+        "梯度提升树": {
+          "accuracy": 0.8713,
+          "precision": 0.5091,
+          "recall": 0.6444,
+          "f1": 0.5688,
+          "roc_auc": 0.8649,
+          "confusion_matrix": [
+            [
+              7502,
+              781
+            ],
+            [
+              447,
+              810
+            ]
+          ],
+          "n_test": 9540,
+          "pos_rate_test": 0.1318,
+          "cv_f1_mean": 0.5629,
+          "cv_f1_std": 0.0093,
+          "threshold": 0.7
+        }
+      },
+      "best_model": "梯度提升树",
+      "best": {
+        "accuracy": 0.8713,
+        "precision": 0.5091,
+        "recall": 0.6444,
+        "f1": 0.5688,
+        "roc_auc": 0.8649,
+        "confusion_matrix": [
+          [
+            7502,
+            781
+          ],
+          [
+            447,
+            810
+          ]
+        ],
+        "n_test": 9540,
+        "pos_rate_test": 0.1318,
+        "cv_f1_mean": 0.5629,
+        "cv_f1_std": 0.0093,
+        "threshold": 0.7
+      }
+    },
+    "after": {
+      "label": "智能体处理后",
+      "n_rows": 45189,
+      "n_features": 77,
+      "pos_rate": 0.1272,
+      "models": {
+        "逻辑回归(带类别权重)": {
+          "accuracy": 0.8659,
+          "precision": 0.4798,
+          "recall": 0.6519,
+          "f1": 0.5528,
+          "roc_auc": 0.8805,
+          "confusion_matrix": [
+            [
+              7077,
+              812
+            ],
+            [
+              400,
+              749
+            ]
+          ],
+          "n_test": 9038,
+          "pos_rate_test": 0.1271,
+          "cv_f1_mean": 0.5281,
+          "cv_f1_std": 0.0045,
+          "threshold": 0.62
+        },
+        "梯度提升树": {
+          "accuracy": 0.884,
+          "precision": 0.5349,
+          "recall": 0.6728,
+          "f1": 0.596,
+          "roc_auc": 0.8987,
+          "confusion_matrix": [
+            [
+              7217,
+              672
+            ],
+            [
+              376,
+              773
+            ]
+          ],
+          "n_test": 9038,
+          "pos_rate_test": 0.1271,
+          "cv_f1_mean": 0.5521,
+          "cv_f1_std": 0.0041,
+          "threshold": 0.72
+        }
+      },
+      "best_model": "梯度提升树",
+      "best": {
+        "accuracy": 0.884,
+        "precision": 0.5349,
+        "recall": 0.6728,
+        "f1": 0.596,
+        "roc_auc": 0.8987,
+        "confusion_matrix": [
+          [
+            7217,
+            672
+          ],
+          [
+            376,
+            773
+          ]
+        ],
+        "n_test": 9038,
+        "pos_rate_test": 0.1271,
+        "cv_f1_mean": 0.5521,
+        "cv_f1_std": 0.0041,
+        "threshold": 0.72
+      }
+    },
+    "delta": {
+      "accuracy": 0.0127,
+      "precision": 0.0258,
+      "recall": 0.0284,
+      "f1": 0.0272,
+      "roc_auc": 0.0338
+    },
+    "precise_only": {
+      "label": "仅精确修复（格式+重复，不含填补/裁剪）",
+      "n_rows": 45211,
+      "n_features": 75,
+      "pos_rate": 0.1316,
+      "models": {
+        "逻辑回归(带类别权重)": {
+          "accuracy": 0.8451,
+          "precision": 0.4141,
+          "recall": 0.4249,
+          "f1": 0.4194,
+          "roc_auc": 0.7379,
+          "confusion_matrix": [
+            [
+              7136,
+              716
+            ],
+            [
+              685,
+              506
+            ]
+          ],
+          "n_test": 9043,
+          "pos_rate_test": 0.1317,
+          "cv_f1_mean": 0.3586,
+          "cv_f1_std": 0.0089,
+          "threshold": 0.6
+        },
+        "梯度提升树": {
+          "accuracy": 0.883,
+          "precision": 0.5461,
+          "recall": 0.6608,
+          "f1": 0.598,
+          "roc_auc": 0.8823,
+          "confusion_matrix": [
+            [
+              7198,
+              654
+            ],
+            [
+              404,
+              787
+            ]
+          ],
+          "n_test": 9043,
+          "pos_rate_test": 0.1317,
+          "cv_f1_mean": 0.5515,
+          "cv_f1_std": 0.0115,
+          "threshold": 0.72
+        }
+      },
+      "best_model": "梯度提升树",
+      "best": {
+        "accuracy": 0.883,
+        "precision": 0.5461,
+        "recall": 0.6608,
+        "f1": 0.598,
+        "roc_auc": 0.8823,
+        "confusion_matrix": [
+          [
+            7198,
+            654
+          ],
+          [
+            404,
+            787
+          ]
+        ],
+        "n_test": 9043,
+        "pos_rate_test": 0.1317,
+        "cv_f1_mean": 0.5515,
+        "cv_f1_std": 0.0115,
+        "threshold": 0.72
+      }
+    },
+    "delta_precise": {
+      "accuracy": 0.0117,
+      "precision": 0.037,
+      "recall": 0.0164,
+      "f1": 0.0292,
+      "roc_auc": 0.0174
+    },
+    "delta_after_vs_precise": {
+      "accuracy": 0.001,
+      "precision": -0.0112,
+      "recall": 0.012,
+      "f1": -0.002,
+      "roc_auc": 0.0164
+    }
+  },
+  "truth_counts": {
+    "missing_cells": 3938,
+    "outlier_cells": 904,
+    "format_cells": 2081,
+    "conflict_cells": 923,
+    "label_error_rows": 678,
+    "duplicate_groups": 2454,
+    "redundant_rows": 2486,
+    "ref_id_variants": 24993,
+    "ref_id_typos": 2227,
+    "ref_edu_conflicts": 4434
+  },
+  "run_id": "run_20261031_234343",
+  "llm_usage": {
+    "provider": "https://api.deepseek.com/v1",
+    "model": "deepseek-chat",
+    "mode": "api",
+    "calls": [
+      {
+        "ts": "2026-10-31 23:43:49.842",
+        "elapsed_s": 6.782,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "Orchestrator",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是多智能体数据处理流水线的调度者。先读数据画像，决定本轮的处理取向。\n取向含义：\n- conservative：只做低风险修复，标签等高风险动作完全跳过；\n- balanced：覆盖所有问题类型，风险动作使用严格阈值；\n- aggressive：追求下游指标，风险动作放宽阈值（可能引入假修复）。\n输出 JSON：{\"aggressiveness\":\"conservative|balanced|aggressive\",\"focus\":[\"优先关注的问题类型\"],\n\"phases\":[\"阶段名\"],\"rationale\":\"为什么这样取向\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 任务\n数据清洗 + 二分类（目标列 y），参照表可用：是\n\n请给出本轮取向与阶段安排。",
+        "response": "{\"aggressiveness\":\"balanced\",\"focus\":[\"完全重复行\",\"异常值与非法数值（age=-1/999、duration=-5/999999、campaign=-3/9999、balance=-999999/123456789、pdays=-999/99999）\",\"混合类型列规范化（day、pdays、previous 含'日'/'days'后缀）\",\"目标列 y 标签规范化（YES/yes/no 等 7 个唯一值）\",\"缺失值（job、education、contact、balance、pdays、城市）\",\"高基数/疑似标识列（客户编号、客户姓名、证件后四位）\"],\"phases\":[\"去重：删除 1808 条完全重复行\",\"类型规范化：解析 day/pdays/previous 的数值+单位后缀，统一为数值\",\"异常值修复：将哨兵值（-1、999、-999999、999999 等）置为缺失或按业务规则裁剪\",\"缺失值处理：类别列众数/unknown 填充，数值列中位数填充\",\"标签清洗：y 归一化为二值（yes/no），处理 YES 等大小写变体\",\"特征工程与编码：剔除客户编号等高基数标识列，类别列编码\",\"建模：二分类训练与验证\"],\"rationale\":\"整体缺失率仅 0.395%，但存在明显脏数据（哨兵值、单位后缀、标签大小写不一致）和 1808 条重复行，属于低风险可修复问题，应全面处理；而标签映射、异常值裁剪等动作存在一定误判风险，故采用严格阈值（仅处理明确哨兵值与明确大小写变体，不激进推断），因此取 balanced 取向。\"}",
+        "prompt_tokens": 1480,
+        "completion_tokens": 366,
+        "cost_usd": 0.0008022,
+        "latency_s": 3.31,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:43:55.655",
+        "elapsed_s": 12.594,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_missing：检查缺失值（含 ?、N/A、全角句号等伪缺失标记）\n- detect_duplicates：检查完全重复行与近似重复行（去空白/大小写归一后）\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n（无）\n\n## 待选工具\n- detect_missing：检查缺失值（含 ?、N/A、全角句号等伪缺失标记）\n- detect_duplicates：检查完全重复行与近似重复行（去空白/大小写归一后）\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 0 个问题。请决定下一步。",
+        "response": "{\"thought\":\"数据画像显示主表存在明显问题：完全重复行1808、多列缺失（job/education/balance/contact/pdays/城市）、age有-1和999异常值、balance有-999999和123456789极端值、duration有-5和999999、campaign有-3和9999、开户年份1927-2041不合理、day/pdays/previous混文本单位、y标签有YES大小写不一致。参照表客户ID有空格和缺C前缀的格式问题。先查缺失值，因为缺失率虽低但涉及多列且含伪缺失标记，是基础质量问题，且能快速确认缺失分布。\",\"next\":\"detect_missing\",\"params\":{},\"reason\":\"缺失值是最基础的数据质量问题，主表多列有缺失且可能存在?、N/A等伪缺失标记，先确认缺失分布再决定后续检测顺序。\"}",
+        "prompt_tokens": 2259,
+        "completion_tokens": 192,
+        "cost_usd": 0.00082113,
+        "latency_s": 2.534,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:43:58.013",
+        "elapsed_s": 14.953,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_duplicates：检查完全重复行与近似重复行（去空白/大小写归一后）\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing']\n\n## 待选工具\n- detect_duplicates：检查完全重复行与近似重复行（去空白/大小写归一后）\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 6 个问题。请决定下一步。",
+        "response": "{\"thought\":\"数据画像显示主表存在大量完全重复行(1808)、客户编号唯一值(45189)少于行数(47697)且top有重复3次，说明重复问题严重；同时age有-1和999、balance有-999999和123456789、duration有-5和999999、campaign有-3和9999、pdays有-999和99999等明显越界值，格式问题也很突出(day/pdays/previous混文本、y有YES大小写、客户ID有空格)。已完成缺失检测，发现6个问题。按规则应先补齐重复与格式/异常类问题，再跑实体匹配(冲突检测依赖它)。当前重复行1808占比约3.8%已足够严重，优先查重复。\",\"next\":\"detect_duplicates\",\"params\":{},\"reason\":\"主表完全重复行1808且客户编号唯一值少于行数，重复问题严重，优先确认重复与近似重复规模\"}",
+        "prompt_tokens": 2214,
+        "completion_tokens": 210,
+        "cost_usd": 0.00082878,
+        "latency_s": 1.991,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:02.615",
+        "elapsed_s": 19.555,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates']\n\n## 待选工具\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_format_issues：检查格式不一致（数值混文本、千分位、全角、单位、大小写）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 8 个问题。请决定下一步。",
+        "response": "{\"thought\":\"数据画像显示大量格式与数值异常：age 有 -1/999，balance 有 -999999/123456789，duration 有 -5/999999，campaign 有 -3/9999，pdays 有 -999/99999，开户年份 1927-2041；同时 day/pdays/previous 混文本单位，y 标签大小写不一致。格式问题覆盖面广且会干扰后续异常检测，因此先查格式。\",\"next\":\"detect_format_issues\",\"params\":{},\"reason\":\"格式不一致（数值混文本、单位、大小写）遍布 day/pdays/previous/y 等关键列，先统一格式再查数值异常更可靠。\"}",
+        "prompt_tokens": 2175,
+        "completion_tokens": 153,
+        "cost_usd": 0.00075555,
+        "latency_s": 1.828,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:07.099",
+        "elapsed_s": 24.038,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates', 'detect_format_issues']\n\n## 待选工具\n- detect_outliers：检查数值异常（业务边界 + IQR + z-score）\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 19 个问题。请决定下一步。",
+        "response": "{\"thought\":\"已完成缺失、重复、格式检查，发现19个问题。画像显示数值列存在明显越界值（age=-1/999、balance=-999999/123456789、duration=-5/999999、campaign=-3/9999、pdays=-999/99999、开户年份1927/2041），且y标签有'YES'等大小写不一致。字段冲突依赖实体匹配，需先跑实体匹配。但当前最直接、覆盖最广的严重问题是数值异常，先查outliers可一次性量化这些越界与离群。\",\"next\":\"detect_outliers\",\"params\":{},\"reason\":\"数值列存在大量明显越界值（负年龄、999年龄、极端balance/duration/campaign/pdays、开户年份1927/2041），先量化数值异常，再跑实体匹配为字段冲突铺路。\"}",
+        "prompt_tokens": 2130,
+        "completion_tokens": 186,
+        "cost_usd": 0.0007797,
+        "latency_s": 1.741,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:08.916",
+        "elapsed_s": 25.855,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates', 'detect_format_issues', 'detect_outliers']\n\n## 待选工具\n- detect_entity_match：跨表实体匹配（主表 ↔ 客户档案表），并输出匹配映射\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 27 个问题。请决定下一步。",
+        "response": "{\"thought\":\"已完成缺失、重复、格式、异常值检测，发现27个问题。主表客户编号唯一值45189但行数47697，且档案表客户ID存在空格/缺C前缀等格式不一致，跨表匹配是字段冲突的前提，必须先跑实体匹配。\",\"next\":\"detect_entity_match\",\"params\":{},\"reason\":\"字段冲突检测依赖实体匹配结果，且主表与档案表ID格式不一致，需先建立匹配映射\"}",
+        "prompt_tokens": 2100,
+        "completion_tokens": 100,
+        "cost_usd": 0.000677,
+        "latency_s": 1.097,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:11.669",
+        "elapsed_s": 28.609,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates', 'detect_format_issues', 'detect_outliers', 'detect_entity_match']\n\n## 待选工具\n- detect_conflicts：检查字段冲突（档案 vs 主表，年龄/开户年份自洽性）\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 30 个问题。请决定下一步。",
+        "response": "{\"thought\":\"已完成缺失、重复、格式、异常值、实体匹配检测，发现30个问题。字段冲突依赖实体匹配结果，且画像显示年龄(-1/999)、开户年份(1927/2041)、y标签大小写混杂等明显可疑，应先查冲突；之后再补标签错误与不平衡。\",\"next\":\"detect_conflicts\",\"params\":{},\"reason\":\"实体匹配已完成，字段冲突检测的前置条件满足；画像中年龄/开户年份越界与y标签混杂提示冲突风险高，优先补齐该类问题。\"}",
+        "prompt_tokens": 2059,
+        "completion_tokens": 116,
+        "cost_usd": 0.00068353,
+        "latency_s": 1.485,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:19.665",
+        "elapsed_s": 36.605,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates', 'detect_format_issues', 'detect_outliers', 'detect_entity_match', 'detect_conflicts']\n\n## 待选工具\n- detect_label_errors：检查标签错误（5 折折外预测，高置信错的样本）\n- detect_imbalance：检查类别不平衡程度\n\n已发现 33 个问题。请决定下一步。",
+        "response": "{\"thought\":\"已完成缺失、重复、格式、异常值、实体匹配、字段冲突六类检测，共发现33个问题。剩余待查为标签错误与类别不平衡。标签y存在'no'/'yes'/'YES'等7个唯一值，疑似标签噪声，且类别分布明显不平衡（no 41312 vs yes 6096），应先查标签错误以确认标签质量，再查不平衡程度。\",\"next\":\"detect_label_errors\",\"params\":{},\"reason\":\"标签列y存在大小写混用及多值（7个唯一值），疑似标签错误，且类别分布已显不平衡，先确认标签错误再评估不平衡。\"}",
+        "prompt_tokens": 2019,
+        "completion_tokens": 142,
+        "cost_usd": 0.00070133,
+        "latency_s": 2.365,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:42.717",
+        "elapsed_s": 59.656,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "DetectorAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据质量检测专家，负责在给定的营销数据表上找出质量问题。\n你可以调用以下检测工具（每次只能调用一个）：\n- detect_imbalance：检查类别不平衡程度\n\n规则：\n- 先看数据画像再决定顺序；发现某类问题已足够严重时优先补齐其他类型；\n- \"字段冲突\"依赖\"跨表实体匹配\"的结果，必须先跑实体匹配；\n- 全部查完后输出 {\"next\":\"stop\",\"reason\":\"...\"}；\n- 只输出 JSON：{\"thought\":\"...\",\"next\":\"工具名或stop\",\"params\":{...},\"reason\":\"为什么先查这个\"}\n[user]\n## 主表画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 参照表画像\n表=客户档案表 行=46567 列=6 整体缺失率=0.0% 完全重复行=22\n列类型分布：{'categorical': 4, 'numeric': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户ID | categorical | 缺失=0 | 唯一=44553 | 样本=['C002175', ' 006318 ', ' 037585 ', 'C026272'] | top=[('C007389', 4), ('C029234', 4), ('C007097', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=3273 | 样本=['华芳', '周霞', '孔涛', '杨平生'] | top=[('姜涛', 69), ('赵磊', 63), ('钱霞', 63)]\n- 证件尾号 | numeric | 缺失=0 | 唯一=9900 | 样本=['3355', '9700', '0200', '5711'] | min=0.0 max=9999.0 mean=5016.572\n- 城市 | categorical | 缺失=0 | 唯一=20 | 样本=['深圳', '宁波', '宁波', '无锡'] | top=[('深圳', 2610), ('上海', 2588), ('广州', 2581)]\n- 建档年份 | numeric | 缺失=0 | 唯一=68 | 样本=['2021', '2014', '2016', '2016'] | min=1954.0 max=2026.0 mean=2014.458\n- 教育水平(档案) | categorical | 缺失=0 | 唯一=4 | 样本=['tertiary', 'secondary', 'primary', 'tertiary'] | top=[('secondary', 22477), ('tertiary', 13532), ('primary', 7731)]\n\n## 已完成的检测\n['detect_missing', 'detect_duplicates', 'detect_format_issues', 'detect_outliers', 'detect_entity_match', 'detect_conflicts', 'detect_label_errors']\n\n## 待选工具\n- detect_imbalance：检查类别不平衡程度\n\n已发现 34 个问题。请决定下一步。",
+        "response": "{\"thought\":\"已完成缺失、重复、格式、异常值、实体匹配、冲突、标签错误共7类检测，发现34个问题。唯一未执行的检测类型是类别不平衡，且主表y字段存在'no'/'yes'/'YES'等标签，类别分布明显不均衡（no 41312 vs yes 6096），需补齐该类型检测。\",\"next\":\"detect_imbalance\",\"params\":{\"table\":\"主表\",\"column\":\"y\"},\"reason\":\"唯一尚未覆盖的检测类型是类别不平衡，主表目标字段y分布高度偏斜，需补齐该类型以完成全部检测。\"}",
+        "prompt_tokens": 1982,
+        "completion_tokens": 132,
+        "cost_usd": 0.00068034,
+        "latency_s": 1.665,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:44:46.861",
+        "elapsed_s": 63.801,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "PlannerAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是数据修复规划专家。根据检测到的问题清单，输出一个修复计划。\n可用的动作（只能从这里选，不能自创）：\n- standardize_format（解决问题：format；参数：无）：统一数值/日期/类别写法，去空白与全角字符，是唯一可精确还原的修复\n- impute_missing（解决问题：missing；参数：{'strategy': ['group_mode', 'median', 'mode']}）：缺失值填补：数值用分组中位数，类别用分组众数\n- drop_duplicates（解决问题：duplicate；参数：{'near': [True, False]}）：删除完全重复与近似重复行（保留首次出现）\n- fix_outliers（解决问题：outlier；参数：{'strategy': ['clip', 'clip_impute', 'median', 'nan']}）：异常值处理：clip=只按业务边界裁剪（保留长尾真实值，推荐）；clip_impute=裁剪后中位数替换（激进，会抹平长尾）；median/nan=整列替换\n- resolve_conflicts（解决问题：conflict；参数：{'policy': ['recompute_from_age', 'drop_rows']}）：字段冲突按规则消解：开户年份由年龄反推；主键重复保留信息最全的一条\n- fix_label_errors（解决问题：label_error；参数：{'threshold': [0.02, 0.05, 0.1], 'max_rows': [200, 500]}）：翻转模型高度确信的错标（极高阈值，只处理极少数）\n- enrich_from_ref（解决问题：entity_match；参数：无）：用跨表匹配置信结果补全主表缺失字段，未匹配行留空待人工处理\n- rebalance_training（解决问题：imbalance；参数：{'method': ['class_weight', 'oversample']}）：不平衡处理只作用于训练集（类别权重/过采样），不修改预处理后的数据\n\n输出 JSON：\n{\"plan\":[{\"action\":\"动作名\",\"params\":{...},\"targets\":[\"字段或问题类型\"],\"rationale\":\"为什么这样修，涉及什么风险\"}],\n \"order_note\":\"对执行顺序的说明\",\n \"risk\":\"整体风险与不可逆之处\"}\n要求：每个问题类型至少被一个动作覆盖；对\"只能近似修复\"的问题在 rationale 里说明局限。\n[user]\n## 数据画像\n表=主表 行=47697 列=22 整体缺失率=0.395% 完全重复行=1808\n列类型分布：{'categorical': 13, 'numeric': 4, 'mixed': 3, 'numeric_formatted': 2}\n列清单（列名|推断类型|缺失数|唯一值数|样本|统计）：\n- 客户编号 | categorical | 缺失=0 | 唯一=45189 | 样本=['C013162', 'C043689', 'C037434', 'C037790'] | top=[('C039103', 3), ('C006219', 3), ('C033111', 3)]\n- 客户姓名 | categorical | 缺失=0 | 唯一=864 | 样本=['曹静', '褚秀兰', '张秀英', '王伟'] | top=[('金芳', 78), ('何勇', 78), ('钱霞', 77)]\n- 证件后四位 | numeric | 缺失=0 | 唯一=9900 | 样本=['8937', '6074', '4951', '9479'] | min=0.0 max=9999.0 mean=5015.086\n- age | numeric | 缺失=0 | 唯一=82 | 样本=['40', '22', '39', '23'] | min=-1.0 max=999.0 mean=41.792\n- job | categorical | 缺失=495 | 唯一=35 | 样本=['blue-collar', 'student', 'management', 'blue-collar'] | top=[('blue-collar', 10104), ('management', 9876), ('technician', 7939)]\n- marital | categorical | 缺失=0 | 唯一=3 | 样本=['married', 'single', 'single', 'single'] | top=[('married', 28730), ('single', 13483), ('divorced', 5484)]\n- education | categorical | 缺失=470 | 唯一=13 | 样本=['primary', 'secondary', 'tertiary', 'secondary'] | top=[('secondary', 24227), ('tertiary', 13918), ('primary', 7140)]\n- default | categorical | 缺失=0 | 唯一=2 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 46831), ('yes', 866)]\n- balance | numeric_formatted | 缺失=498 | 唯一=7215 | 样本=['143', '123', '93', '1105'] | min=-999999.0 max=123456789.0 mean=244842.093\n- housing | categorical | 缺失=0 | 唯一=6 | 样本=['no', 'no', 'yes', 'yes'] | top=[('yes', 26470), ('no', 21227)]\n- loan | categorical | 缺失=0 | 唯一=7 | 样本=['yes', 'no', 'yes', 'no'] | top=[('no', 40040), ('yes', 7657)]\n- contact | categorical | 缺失=1755 | 唯一=3 | 样本=['cellular', 'telephone', 'cellular', 'cellular'] | top=[('cellular', 29974), ('unknown', 13108), ('telephone', 2860)]\n- day | mixed | 缺失=0 | 唯一=124 | 样本=['8', '12', '13', '14'] | min=0.0 max=99.0 mean=15.895 非数值样本=['23日', '12日', '28日', '05日', '13日']\n- month | categorical | 缺失=0 | 唯一=35 | 样本=['jul', 'may', 'may', 'may'] | top=[('may', 14186), ('jul', 7106), ('aug', 6478)]\n- duration | numeric_formatted | 缺失=0 | 唯一=1814 | 样本=['167', '267', '196', '377'] | min=-5.0 max=999999.0 mean=1619.949\n- campaign | numeric | 缺失=0 | 唯一=51 | 样本=['2', '2', '2', '1'] | min=-3.0 max=9999.0 mean=15.959\n- pdays | mixed | 缺失=483 | 唯一=581 | 样本=['-1', '89', '331', '-1'] | min=-999.0 max=99999.0 mean=233.98 非数值样本=['254 days', '-1 days', '-1 days', '-1 days', '18 days']\n- previous | mixed | 缺失=0 | 唯一=49 | 样本=['0', '7', '3', '0'] | min=0.0 max=275.0 mean=0.581 非数值样本=['0 days', '0 days', '7 days', '0 days', '3 days']\n- poutcome | categorical | 缺失=0 | 唯一=4 | 样本=['unknown', 'success', 'failure', 'unknown'] | top=[('unknown', 38978), ('failure', 5188), ('other', 1938)]\n- y | categorical | 缺失=0 | 唯一=7 | 样本=['no', 'no', 'no', 'no'] | top=[('no', 41312), ('yes', 6096), ('YES', 74)]\n- 城市 | categorical | 缺失=448 | 唯一=20 | 样本=['广州', '郑州', '深圳', '厦门'] | top=[('杭州', 2494), ('无锡', 2438), ('长沙', 2427)]\n- 开户年份 | numeric | 缺失=0 | 唯一=103 | 样本=['2015', '2026', '2024', '2026'] | min=1927.0 max=2041.0 mean=2014.272\n\n## 问题清单\n- missing：6 项，涉及字段 ['balance', 'contact', 'education', 'job', 'pdays', '城市']，最高严重度 low，例：missing on job，影响 495 行(1.04%)\n- duplicate：2 项，涉及字段 []，最高严重度 medium，例：duplicate on None，影响 1808 行(3.79%)\n- format：11 项，涉及字段 ['balance', 'day', 'duration', 'education', 'housing', 'job', 'loan', 'month']，最高严重度 low，例：format on job，影响 750 行(1.57%)\n- outlier：8 项，涉及字段 ['age', 'balance', 'campaign', 'day', 'duration', 'pdays', 'previous', '开户年份']，最高严重度 medium，例：outlier on age，影响 155 行(0.32%)\n- entity_match：3 项，涉及字段 ['客户姓名', '客户编号']，最高严重度 medium，例：entity_match on 客户编号，影响 2283 行(4.79%)\n- conflict：3 项，涉及字段 ['age|开户年份', 'education|教育水平(档案)', '客户编号']，最高严重度 medium，例：conflict on age|开户年份，影响 1007 行(2.11%)\n- label_error：1 项，涉及字段 ['y']，最高严重度 low，例：label_error on y，影响 1168 行(2.45%)\n- imbalance：1 项，涉及字段 ['y']，最高严重度 high，例：imbalance on y，影响 45 行(0.11%)\n\n请给出修复计划。",
+        "response": "{\n  \"plan\": [\n    {\n      \"action\": \"standardize_format\",\n      \"params\": {},\n      \"targets\": [\"balance\", \"day\", \"duration\", \"education\", \"housing\", \"job\", \"loan\", \"month\"],\n      \"rationale\": \"统一数值/日期/类别写法，去除空白与全角字符，修复格式问题。这是唯一可精确还原的修复，风险低。\"\n    },\n    {\n      \"action\": \"drop_duplicates\",\n      \"params\": {\"near\": true},\n      \"targets\": [\"duplicate\"],\n      \"rationale\": \"删除完全重复与近似重复行（保留首次出现），减少数据冗余。近似重复可能误删真实但相似记录，需谨慎。\"\n    },\n    {\n      \"action\": \"resolve_conflicts\",\n      \"params\": {\"policy\": \"recompute_from_age\"},\n      \"targets\": [\"age|开户年份\", \"education|教育水平(档案)\", \"客户编号\"],\n      \"rationale\": \"字段冲突按规则消解：开户年份由年龄反推；主键重复保留信息最全的一条。反推可能引入误差，但可解决冲突。\"\n    },\n    {\n      \"action\": \"impute_missing\",\n      \"params\": {\"strategy\": [\"group_mode\", \"median\", \"mode\"]},\n      \"targets\": [\"balance\", \"contact\", \"education\", \"job\", \"pdays\", \"城市\"],\n      \"rationale\": \"缺失值填补：数值用分组中位数，类别用分组众数。填补会引入不确定性，但缺失率低（最高1.04%），风险可控。\"\n    },\n    {\n      \"action\": \"fix_outliers\",\n      \"params\": {\"strategy\": \"clip\"},\n      \"targets\": [\"age\", \"balance\", \"campaign\", \"day\", \"duration\", \"pdays\", \"previous\", \"开户年份\"],\n      \"rationale\": \"异常值处理：clip=只按业务边界裁剪（保留长尾真实值，推荐）。裁剪可能改变极端值，但保留长尾信息。\"\n    },\n    {\n      \"action\": \"enrich_from_ref\",\n      \"params\": {},\n      \"targets\": [\"客户姓名\", \"客户编号\"],\n      \"rationale\": \"用跨表匹配置信结果补全主表缺失字段，未匹配行留空待人工处理。补全依赖参考表质量，未匹配部分需人工。\"\n    },\n    {\n      \"action\": \"fix_label_errors\",\n      \"params\": {\"threshold\": 0.05, \"max_rows\": 200},\n      \"targets\": [\"y\"],\n      \"rationale\": \"翻转模型高度确信的错标（极高阈值，只处理极少数）。可能误改真实标签，但阈值高可控制风险。\"\n    },\n    {\n      \"action\": \"rebalance_training\",\n      \"params\": {\"method\": \"class_weight\"},\n      \"targets\": [\"y\"],\n      \"rationale\": \"不平衡处理只作用于训练集（类别权重），不修改预处理后的数据。避免过采样可能导致的过拟合。\"\n    }\n  ],\n  \"order_note\": \"先执行格式标准化，确保后续操作基于统一格式；然后删除重复行，避免重复数据干扰；接着解决字段冲突，确保数据一致性；再填补缺失值，利用分组信息；之后处理异常值，裁剪到合理范围；然后进行实体匹配补全，利用参考表；再修正标签错误，提高标签质量；最后在训练时处理不平衡。\",\n  \"risk\": \"整体风险较低，但存在不可逆操作：删除重复行会永久移除数据；异常值裁剪可能改变极端值；标签修正可能误改真实标签；缺失填补引入不确定性。建议在执行前备份原始数据。\"\n}",
+        "prompt_tokens": 2217,
+        "completion_tokens": 798,
+        "cost_usd": 0.00147639,
+        "latency_s": 4.133,
+        "mock": false,
+        "attempt": 1
+      },
+      {
+        "ts": "2026-10-31 23:45:50.702",
+        "elapsed_s": 127.641,
+        "run_id": "run_20261031_234343",
+        "event": "llm_call",
+        "agent": "ReporterAgent",
+        "model": "deepseek-chat",
+        "prompt": "[system]\n你是课程项目的汇报撰写者。根据流水线的结构化结果，写一段 200-300 字的中文小结，\n必须包含：检测到的问题规模、修复动作与不可逆之处、验证结论、下游任务指标变化，\n以及诚实说明\"哪些修复只能近似、不能声称还原\"。不要编造数字，只用给定数据。\n[user]\n## 事实数据\n{'行数列数': [45189, 25], '检测问题数': 35, '按类型': {'missing': 6, 'duplicate': 2, 'format': 11, 'outlier': 8, 'entity_match': 3, 'conflict': 3, 'label_error': 1, 'imbalance': 1}, '跨表匹配行数': 45414, '验证轮次': 1, '最终质量分': 96.1, '下游指标': {'accuracy': 0.884, 'f1': 0.596, 'roc_auc': 0.8987}, '指标提升': {'accuracy': 0.0127, 'precision': 0.0258, 'recall': 0.0284, 'f1': 0.0272, 'roc_auc': 0.0338}}\n\n## 执行轨迹\n[{'round': 1, 'actions': ['enrich_from_ref', 'standardize_format', 'drop_duplicates', 'impute_missing', 'fix_outliers', 'resolve_conflicts', 'fix_label_errors', 'rebalance_training'], 'passed': True, 'quality_score': 96.1, 'violations': []}]\n\n请写小结。",
+        "response": "本次数据治理覆盖 45189 行 × 25 列，共检测到 35 个问题，其中格式问题 11 个、异常值 8 个、缺失值 6 个，另有重复 2 个、实体匹配 3 个、冲突 3 个、标签错误 1 个、类别不平衡 1 个；跨表匹配涉及 45414 行。执行 1 轮修复，动作包括参考表补全、格式标准化、去重、缺失填补、异常值修正、冲突消解、标签纠错与训练集重平衡，全部通过校验，最终质量分 96.1。下游任务指标均有提升：accuracy 提升 0.0127 至 0.884，precision 提升 0.0258，recall 提升 0.0284，F1 提升 0.0272 至 0.596，ROC-AUC 提升 0.0338 至 0.8987。需诚实说明：缺失填补、异常值修正与冲突消解只能得到近似合理值，无法还原原始真实记录；去重与格式标准化造成的行级删改亦不可逆。因此上述修复应表述为\"质量改善\"，不宜声称\"完全还原\"。",
+        "prompt_tokens": 357,
+        "completion_tokens": 272,
+        "cost_usd": 0.00039559,
+        "latency_s": 3.343,
+        "mock": false,
+        "attempt": 1
+      }
+    ],
+    "prompt_tokens": 20635,
+    "completion_tokens": 2395,
+    "cost_usd": 0.008206
+  },
+  "quality_rounds": [
+    {
+      "round": 1,
+      "actions": [
+        "enrich_from_ref",
+        "standardize_format",
+        "drop_duplicates",
+        "impute_missing",
+        "fix_outliers",
+        "resolve_conflicts",
+        "fix_label_errors",
+        "rebalance_training"
+      ],
+      "passed": true,
+      "quality_score": 96.1,
+      "violations": []
+    }
+  ]
+}
