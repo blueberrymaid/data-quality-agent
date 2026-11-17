@@ -46,7 +46,9 @@
 │  ├─ 05_ablation.py         # 消融实验：逐步累加修复动作的贡献
 │  ├─ 06_make_docs.py        # 生成报告 docx / PPT / 个人贡献说明
 │  ├─ 07_run_log_digest.py   # 把原始事件日志整理成「智能体运行记录」
-│  └─ 08_package.py          # 打包成可提交的压缩包（自动排除密钥与依赖目录）
+│  ├─ 08_package.py          # 打包成可提交的压缩包（自动排除密钥与依赖目录）
+│  ├─ 09_make_design_report.py # 生成《项目设计报告》（数据取自指标汇总与消融实验）
+│  └─ 10_print_run_transcript.py # 把留档运行回放成终端记录（用于报告附录截图）
 ├─ data/
 │  ├─ raw/                   # 原始（干净）主表与客户档案表
 │  ├─ injected/              # 注入缺陷后的脏数据
@@ -92,7 +94,9 @@ python scripts/04_evaluate.py        # 4. 对照真值评估检测/修复/下游
 python scripts/05_ablation.py        # 5. 消融实验（约 10 分钟，5 折 CV × 8 档）
 python scripts/06_make_docs.py       # 6. 生成报告 docx、PPT、个人贡献说明
 python scripts/07_run_log_digest.py  # 7. 生成智能体运行记录（提示词/工具/错误与修正）
-python scripts/08_package.py         # 8. 打包成可提交的压缩包（可选，约 7.6 MB）
+python scripts/08_package.py         # 8. 打包成可提交的压缩包（可选，约 7.7 MB）
+python scripts/09_make_design_report.py   # 9. 生成《项目设计报告》docx
+python scripts/10_print_run_transcript.py # 10. 回放留档运行（不调模型，不需联网；用于截图）
 ```
 
 ### 使用真实大模型
