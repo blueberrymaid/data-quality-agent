@@ -1,5 +1,7 @@
 # 数据处理智能体（Data Quality Agent）
 
+代码仓库：**https://github.com/blueberrymaid/data-quality-agent**
+
 一个能**自主完成数据质量分析与预处理**的智能体系统，采用 **多智能体 + Plan-and-Execute** 架构，
 在真实公开数据集（UCI Bank Marketing）上完成「检测 → 规划 → 执行 → 验证 → 下游建模」全闭环，
 并支持一个**分类任务**（预测客户是否认购定期存款）。

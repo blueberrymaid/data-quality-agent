@@ -28,7 +28,7 @@ TITLE = "数据处理智能体：自主完成数据质量分析与预处理的�
 SUBTITLE = "课程项目 · 设计报告"
 DATE_LINE = "2026 年 11 月"
 
-REPO_PLACEHOLDER = "〔待填写：代码仓库链接（如 Gitee / GitHub）〕"
+REPO_PLACEHOLDER = "https://github.com/blueberrymaid/data-quality-agent"
 
 NAVY = RGBColor(0x1F, 0x38, 0x64)
 GRAY = RGBColor(0x40, 0x40, 0x40)
